@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello EventsController!{% endblock %}
+
+{% block body %}
+
+<h1>{{ events|length }} Events</h1>
+
+<ul>
+    {% for event in events %}
+        <article>
+            <header>
+                <h2>{{ event.name }}</h2>
+            </header>
+            <p>{{ event.description }}</p>
+
+            <ul>
+                <li><strong>Date: </strong>{{ event.startsAt|date() }}</li>
+                <li><strong>Location: </strong>{{ event.location }}</li>
+                <li><strong>Price: </strong>{{ event.price|number_format(2,'.') }} €</li>
+            </ul>
+        </article>
+    {% endfor %}
+</ul>
+
+{% endblock %}
