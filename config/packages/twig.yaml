@@ -1,5 +1,10 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
+     # The default format options for the number_format filter
+    number_format:
+        decimals:             2
+        decimal_point:        .
+        thousands_separator:  ','
 
 when@test:
     twig:
