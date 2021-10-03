@@ -6,10 +6,16 @@ use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 
-class MarkdownTransformers 
+class MarkdownTransformers
 {
+  /**
+   * @var MarkdownParserInterface
+   */
   private $markdown;
 
+  /**
+   * @var CacheInterface
+   */
   private $cache;
 
   public function __construct(MarkdownParserInterface $markdown,CacheInterface $cache)
@@ -23,8 +29,6 @@ class MarkdownTransformers
     $key = md5("markdown_",$str);
 
     $valueCache = $this->cache->get($key,function(ItemInterface $item) use($str) {
-
-      sleep(1);
 
       return $this->markdown->transformMarkdown($str);
 
