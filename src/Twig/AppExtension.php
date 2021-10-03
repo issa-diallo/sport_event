@@ -3,6 +3,7 @@
 namespace App\Twig;
 
 use App\Services\MarkdownTransformers;
+use InvalidArgumentException;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -33,15 +34,47 @@ class AppExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('function_name', [$this, 'doSomething']),
+            new TwigFunction('pluralize', [$this, 'pluralize']),
         ];
     }
 
-    public function doSomething($value)
+    /**
+     * add an s to the singular
+     *
+     * @param integer $count
+     * @param string $singular
+     * @param string|null $plural
+     * @return void
+     */
+    public function pluralize(int $count, string $singular, $plural = null): string
     {
-        // ...
+      if(!is_numeric($count)){
+        throw new InvalidArgumentException("$count must be a value numeric");
+      }
+
+      if($plural == null){
+        $plural = $singular . "s";
+      }
+
+      switch ($count) {
+        case 1:
+          $string = $singular;
+          break;
+
+        default:
+          $string = $plural;
+          break;
+      }
+
+      return sprintf("%d %s",$count,$string);
     }
 
+    /**
+     * transforms markdown into html and caches it
+     *
+     * @param string $value
+     * @return string
+     */
     public function parseMarkdown(string $value): string
     {
       return $this->markdownTransformer->parse($value);
