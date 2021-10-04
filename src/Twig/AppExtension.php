@@ -2,6 +2,7 @@
 
 namespace App\Twig;
 
+use App\Entity\Event;
 use App\Services\MarkdownTransformers;
 use InvalidArgumentException;
 use Twig\Extension\AbstractExtension;
@@ -35,7 +36,18 @@ class AppExtension extends AbstractExtension
     {
         return [
             new TwigFunction('pluralize', [$this, 'pluralize']),
+            new TwigFunction('format_price', [$this, 'formatPrice']),
         ];
+    }
+
+
+    public function formatPrice($event = null)
+    {
+      if($event == 0 || is_null($event)){
+        return "Free";
+      }else{
+        return $event;
+      }
     }
 
     /**

@@ -28,12 +28,8 @@
 					<li>
 						<strong>Price:
 						</strong>
-						{% if event.price == 0 or event.price == null %}
-							Free
-						{% else %}
-							{{ event.price|number_format }}
-							€</li>
-					{% endif %}
+						{{ format_price(event.price)}}
+					</li>
 				</ul>
 			</article>
 		{% endfor %}
